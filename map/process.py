@@ -10,6 +10,6 @@ with open('us-states-topo.json') as f :
     for obj in data['objects']['us-states-geo']['geometries'] :
         props = obj['properties']
         target1.write(props['STATE']+','+props['NAME']+'\n')
-        target2.write(props['STATE']+','+str(int(random.random()*100))+'\n')
+        target2.write(props['STATE']+','+str(1)+'\n')
     target1.close()
     target2.close()

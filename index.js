@@ -6,7 +6,7 @@ var counties = d3.map();
 // transormation matrix
 var positioning;
 
-var MAX_EXTRUSION = 50;
+var MAX_EXTRUSION = 250;
 
 var variables = [], currentVariable;
 
@@ -46,10 +46,11 @@ function initThree() {
 
 function initCamera() {
 	camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
-//	camera.position.set(-1.9540240848986357,49.5684101788394,6.257355848756459);
-//	camera.up.set(-0.6078708992433252,-0.08628447972888699,0.78933387005184);
-	camera.position.set(0,1500,0);
-	camera.up.set(0,0,1);
+
+	camera.position.set(353.4501, 1180.3982, 855.4139 );
+	camera.up.set(0.04286,0.57781,-0.815043);
+	// camera.position.set(0,1500,0);
+	// camera.up.set(0,0,-1);
 
 	// restoreCameraOrientation(camera);
 }
@@ -147,7 +148,7 @@ var RO_CENTER;
 
 function initGeometry(features) {
   var projection = d3.geo.albers()
-    .translate([window.innerWidth / 2, window.innerHeight / 2]);
+    .translate([window.innerWidth / 2 - 100, window.innerHeight / 2 + 10]);
 
 	var path = d3.geo.path().projection(projection);
 
@@ -272,12 +273,14 @@ initPositioningTransform();
 
 var VariableButtons = React.createClass({
 	getVariableFromHash: function() {
-		var re = new RegExp('#/var/*');
+		var re = new RegExp('#/var/.*');
 		var match = window.location.hash.match(re);
 		var currentVariable;
 
 		if (match) {
-			currentVariable = +match[1];
+			var intendedVar = match[0].split('/')[2];
+			currentVariable = intendedVar;
+
 			if (this.props.variables.indexOf(currentVariable) > -1) {
 				return currentVariable;
 			}
